@@ -1,21 +1,28 @@
 package id.web.twoh.mapbox;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.Sprite;
+import com.mapbox.mapboxsdk.annotations.SpriteFactory;
+import com.mapbox.mapboxsdk.constants.MyLocationTracking;
+import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.overlay.Icon;
-import com.mapbox.mapboxsdk.overlay.Marker;
-import com.mapbox.mapboxsdk.overlay.UserLocationOverlay;
+import com.mapbox.mapboxsdk.geometry.LatLngZoom;
 import com.mapbox.mapboxsdk.views.MapView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +40,68 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setMap();
+        setMap(savedInstanceState);
     }
 
-    private void setMap(){
-        MapView mapView = (MapView) findViewById(R.id.mapview);
-        Marker marker = new Marker("Kementerian BUMN","Kantor",new LatLng(-6.181793, 106.825434)).setIcon(new Icon(this, Icon.Size.MEDIUM,"commercial","#990000"));
-        mapView.addMarker(marker);
-        mapView.setDiskCacheEnabled(true);
-        mapView.setUserLocationEnabled(true)
-                .setUserLocationTrackingMode(UserLocationOverlay.TrackingMode.NONE);
-        mapView.getController().setZoomAnimated(13f, new LatLng(-6.178696, 106.827722), true);
+    private void setMap(Bundle savedInstanceState){
+        mapView = (MapView) findViewById(R.id.mapview);
+        mapView.setStyleUrl(Style.EMERALD);
+        mapView.setMyLocationEnabled(true);
+        mapView.setMyLocationTrackingMode(MyLocationTracking.TRACKING_NONE);
+        mapView.setCenterCoordinate(new LatLngZoom(-6.178696, 106.827722, 10f), true);
+
+        /* add marker icon */
+        SpriteFactory spriteFactory = new SpriteFactory(mapView);
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_marker_strip);
+        Sprite icon = spriteFactory.fromDrawable(drawable);
+
+        mapView.addMarker(new MarkerOptions()
+                .position(new LatLng(-6.179696, 106.828722))
+                .title("To Entertain")
+                .icon(icon));
+
+        mapView.addMarker(new MarkerOptions()
+                .position(new LatLng(-6.181793, 106.825434))
+                .title("Kantor")
+                .snippet("Kantor Kementerian BUMN"));
+
+        mapView.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onPause()  {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
     }
 
     @Override
