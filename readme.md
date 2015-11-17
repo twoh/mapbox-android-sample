@@ -10,7 +10,8 @@ This is a maps application sample using MapBox SDK for Android. Main functions a
 
 ## Credits
 
-[The TWOH's Engineering](http://www.twoh.co)
+- [The TWOH's Engineering](http://www.twoh.co)
+- [MapBox] (https://www.mapbox.com/android-sdk/)
 
 ## Licensed under MIT License
 
