@@ -1,6 +1,6 @@
-# MapBox Maps Sample by TWOH
+# MapBox Maps SDK for Android Sample
 
-This is a maps application sample using MapBox SDK for Android
+This is a maps application sample using MapBox SDK for Android. Main functions are for displaying maps and markers.
 
 ## Installation
 
